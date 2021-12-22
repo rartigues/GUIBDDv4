@@ -1,5 +1,7 @@
-module.exports = (sequelize, Sequelize) => {
-  
+// module.exports = (sequelize, Sequelize) => {
+  const sequelize = require("../models/index.js");
+  const Sequelize = require('sequelize');
+
   const empleado = sequelize.define("empleado", {
     RUT: {
       type: Sequelize.STRING, //Algo para asegurar que sea valido?
@@ -16,6 +18,7 @@ module.exports = (sequelize, Sequelize) => {
     RUT_e: {
       type: Sequelize.STRING,
       primaryKey: true,
+      onDelete: "cascade",
       references: {
         model: empleado,
         key: "RUT",
@@ -43,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
   const contrato = sequelize.define("contrato", {
     ID_contrato: { type: Sequelize.INTEGER, primaryKey: true },
     ID_departamento: { type: Sequelize.INTEGER, references: { model: departamento, key: "ID_departamento" } },
-    RUT_e: { type: Sequelize.STRING, references: { model: empleado, key: "RUT", allowNull: false} },
+    RUT_e: { type: Sequelize.STRING, onDelete: 'cascade',references: { model: empleado, key: "RUT", allowNull: false} }, //ADD CASCADE
     sueldo: { type: Sequelize.INTEGER, allowNull: false },
     jornada: { type: Sequelize.INTEGER, allowNull: false },
     dias_libres: { type: Sequelize.INTEGER, allowNull: false },
@@ -56,6 +59,7 @@ module.exports = (sequelize, Sequelize) => {
     ID_pago: { type: Sequelize.INTEGER, primaryKey: true },
     RUT_e: {
       type: Sequelize.STRING,
+      onDelete: "cascade",
       references: {
         model: empleado,
         key: "RUT",
@@ -83,6 +87,7 @@ module.exports = (sequelize, Sequelize) => {
     RUT_e: {
       type: Sequelize.STRING,
       primaryKey: true,
+      onDelete: "cascade",
       references: {
         model: empleado,
         key: "RUT",
@@ -95,6 +100,7 @@ module.exports = (sequelize, Sequelize) => {
     RUT_e: {
       type: Sequelize.STRING,
       primaryKey: true,
+      onDelete: "cascade",
       references: {
         model: empleado,
         key: "RUT",
@@ -102,6 +108,20 @@ module.exports = (sequelize, Sequelize) => {
     },
     timestamp: { type: Sequelize.DATE, primaryKey: true },
   });
+
+module.exports = (
+    
+    (sequelize, Sequelize) => estado,
+    (sequelize, Sequelize) => pago,
+    (sequelize, Sequelize) => contrato,
+    //tiene,
+    (sequelize, Sequelize) => departamento,
+    //pertenece,
+    (sequelize, Sequelize) => empezar,
+    (sequelize, Sequelize) => terminar,
+    (sequelize, Sequelize) => horas_semana,
+    (sequelize, Sequelize) => empleado
+  );
 
 
 
@@ -150,16 +170,85 @@ module.exports = (sequelize, Sequelize) => {
  
 
 
-  return (
-    empleado,
-    estado,
-    pago,
-    contrato,
-    //tiene,
-    departamento,
-    //pertenece,
-    empezar,
-    terminar,
-    horas_semana
-  );
-};
+  // return (
+    
+  //   estado,
+  //   pago,
+  //   contrato,
+  //   //tiene,
+  //   departamento,
+  //   //pertenece,
+  //   empezar,
+  //   terminar,
+  //   horas_semana,
+  //   empleado
+  // );
+// };
+
+//! ///////////////////////////////////////////
+
+// module.exports.empleado = (sequelize, Sequelize) => {
+//   const empleado = sequelize.define("empleado", {
+//     RUT: {
+//       type: Sequelize.STRING, //Algo para asegurar que sea valido?
+//       primaryKey: true,
+//     },
+//     nombre: { type: Sequelize.STRING, allowNull: false },
+//     apellido: { type: Sequelize.STRING, allowNull: false },
+//     fecha_nacimiento: Sequelize.DATE,
+//     telefono: Sequelize.STRING, //Puede ser integrer pero esta el '+'?
+//     email: { type: Sequelize.STRING, allowNull: false },
+//   });
+// }
+
+// module.exports.estado = (sequelize, Sequelize) => {
+//   const estado = sequelize.define("estado", {
+//     RUT_e: {
+//       type: Sequelize.STRING,
+//       primaryKey: true,
+//       onDelete: "cascade",
+//       references: {
+//         model: empleado,
+//         key: "RUT",
+//       },
+//     },
+//     estado: {
+//       type: Sequelize.STRING,
+//       validate: {
+//         isIn: {
+//           args: [["trabajo", "vacaciones", "licencia"]],
+//           msg: "El estado debe ser trabajo, vacaciones o licencia"
+          
+//         }
+//       },
+//     },
+//     fecha_fin_estado: Sequelize.DATE,
+//     dias_libres_restantes: Sequelize.INTEGER,
+//   });
+// }
+
+// module.exports.estado = (sequelize, Sequelize) => {
+//   const estado = sequelize.define("estado", {
+//     RUT_e: {
+//       type: Sequelize.STRING,
+//       primaryKey: true,
+//       onDelete: "cascade",
+//       references: {
+//         model: empleado,
+//         key: "RUT",
+//       },
+//     },
+//     estado: {
+//       type: Sequelize.STRING,
+//       validate: {
+//         isIn: {
+//           args: [["trabajo", "vacaciones", "licencia"]],
+//           msg: "El estado debe ser trabajo, vacaciones o licencia"
+          
+//         }
+//       },
+//     },
+//     fecha_fin_estado: Sequelize.DATE,
+//     dias_libres_restantes: Sequelize.INTEGER,
+//   });
+// }

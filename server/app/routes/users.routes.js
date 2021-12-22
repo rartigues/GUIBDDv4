@@ -9,17 +9,30 @@ module.exports = app => {
     // Retrieve all Users
     router.get("/", users.findAll);
 
-    // Retrieve a single User with email
-    router.get("/:user_email", users.findOneUser);
+    // Conseguir empleado por rut
+    router.get("/:rut", users.findOne);
 
-    // Update User by id
-    router.put("/:user_id", users.updateUser);
+    // Eliminar empleado por rut
+    router.delete("/:rut", users.deleteEmpleado);
 
-    // Delete a User with the specified id in the request
-    router.delete("/:user_id", users.deleteUser);
+    // // Conseguir cargo de contrato por rut
+    // router.get("/contrato/:rut", users.findOneCargo);
 
-    // Delete all Users
-    router.delete("/", users.deleteAllUsers);
+    //todo Cambiar estado de un empleado
+    router.put("/", users.changeEstado);
+
+    // // Retrieve a single User with email
+    // router.get("/:user_email", users.findOneUser);
+
+    // // Update User by id
+    // router.put("/:user_id", users.updateUser);
+
+    // // Delete a User with the specified id in the request
+    // router.delete("/:user_id", users.deleteUser);
+
+    // // Delete all Users
+    // router.delete("/", users.deleteAllUsers);
 
     app.use('/api/users', router);
 };
+
